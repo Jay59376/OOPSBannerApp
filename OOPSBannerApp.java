@@ -1,88 +1,71 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class OOPSBannerApp {
 
     /**
-     * Inner Static Class to encapsulate character and its pattern
+     * Utility method to create and return character pattern map
      */
-    static class CharacterPattern {
-        private char character;
-        private String[] pattern;
+    public static Map<Character, String[]> createPatternMap() {
 
-        // Constructor
-        public CharacterPattern(char character, String[] pattern) {
-            this.character = character;
-            this.pattern = pattern;
-        }
+        Map<Character, String[]> map = new HashMap<>();
 
-        // Getter for character
-        public char getCharacter() {
-            return character;
-        }
+        map.put('O', new String[]{
+                " ***** ",
+                "*     *",
+                "*     *",
+                "*     *",
+                "*     *",
+                "*     *",
+                " ***** "
+        });
 
-        // Getter for pattern
-        public String[] getPattern() {
-            return pattern;
-        }
+        map.put('P', new String[]{
+                "****** ",
+                "*     *",
+                "*     *",
+                "****** ",
+                "*      ",
+                "*      ",
+                "*      "
+        });
+
+        map.put('S', new String[]{
+                " ***** ",
+                "*     *",
+                "*      ",
+                " ***** ",
+                "      *",
+                "*     *",
+                " ***** "
+        });
+
+        return map;
     }
 
     /**
-     * Utility method to get pattern for a given character
+     * Utility method to render banner
      */
-    public static String[] getCharacterPattern(CharacterPattern[] patterns, char ch) {
-        for (CharacterPattern cp : patterns) {
-            if (cp.getCharacter() == ch) {
-                return cp.getPattern();
-            }
-        }
-        return null;
-    }
+    public static void renderBanner(String word, Map<Character, String[]> map) {
 
-    public static void main(String[] args) {
-
-        System.out.println("OOPS Banner App - UC7: Inner Class Implementation\n");
-
-        // Define patterns
-        CharacterPattern[] patterns = {
-                new CharacterPattern('O', new String[]{
-                        " ***** ",
-                        "*     *",
-                        "*     *",
-                        "*     *",
-                        "*     *",
-                        "*     *",
-                        " ***** "
-                }),
-                new CharacterPattern('P', new String[]{
-                        "****** ",
-                        "*     *",
-                        "*     *",
-                        "****** ",
-                        "*      ",
-                        "*      ",
-                        "*      "
-                }),
-                new CharacterPattern('S', new String[]{
-                        " ***** ",
-                        "*     *",
-                        "*      ",
-                        " ***** ",
-                        "      *",
-                        "*     *",
-                        " ***** "
-                })
-        };
-
-        String word = "OOPS";
-
-        // Render banner row by row
         for (int row = 0; row < 7; row++) {
             StringBuilder line = new StringBuilder();
 
             for (int i = 0; i < word.length(); i++) {
-                String[] pattern = getCharacterPattern(patterns, word.charAt(i));
-                line.append(pattern[row]).append("  ");
+                char ch = word.charAt(i);
+                line.append(map.get(ch)[row]).append("  ");
             }
 
             System.out.println(line);
         }
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println("OOPS Banner App - UC8: HashMap Implementation\n");
+
+        Map<Character, String[]> patternMap = createPatternMap();
+
+        renderBanner("OOPS", patternMap);
     }
 }
